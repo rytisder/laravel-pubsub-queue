@@ -87,7 +87,7 @@ class PubSubJob extends Job implements JobContract
         $attempts = $this->attempts();
         $this->pubsub->republish(
             $this->job,
-            $this->queue,
+            $this->job->attribute('topic') ?: $this->queue,
             ['attempts' => (string) $attempts],
             $delay
         );
