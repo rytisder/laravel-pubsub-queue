@@ -119,6 +119,8 @@ class PubSubQueue extends Queue implements QueueContract
             $publish['attributes'] = $this->validateMessageAttributes($options);
         }
 
+        $publish['attributes']['topic'] = $queue;
+
         $topic->publish($publish);
 
         $decoded_payload = json_decode($payload, true);
@@ -181,7 +183,7 @@ class PubSubQueue extends Queue implements QueueContract
             $this,
             $messages[0],
             $this->connectionName,
-            $this->getQueue($queue)
+            $messages[0]->attribute('topic') ?: $this->getQueue($queue)
         );
     }
 
@@ -236,6 +238,7 @@ class PubSubQueue extends Queue implements QueueContract
 
         $options = array_merge([
             'available_at' => (string) $this->availableAt($delay),
+            'topic' => $queue
         ], $this->validateMessageAttributes($options));
 
         return $topic->publish([
