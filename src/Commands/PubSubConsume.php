@@ -33,7 +33,7 @@ class PubSubConsume extends Command
     /**
      * @return array
      */
-    private function getOptions(): array
+    protected function getOptions(): array
     {
         return [
             'connection' => 'pubsub',
