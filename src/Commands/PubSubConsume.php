@@ -13,6 +13,7 @@ class PubSubConsume extends Command
     protected $signature = 'pubsub:consume
                             {sub-name : The name of the sub to consume}
                             {--sleep=3 : Number of seconds to sleep when no job is available}
+                            {--connection=pubsub : The maximum number of seconds the worker should run}
                             {--max-time=0 : The maximum number of seconds the worker should run}';
 
     /**
@@ -36,7 +37,7 @@ class PubSubConsume extends Command
     protected function getOptions(): array
     {
         return [
-            'connection' => 'pubsub',
+            'connection' => $this->getConnectionOption(),
             '--sleep' => $this->getSleepOption(),
             '--max-time' => $this->getMaxTimeOption()
         ];
@@ -66,6 +67,14 @@ class PubSubConsume extends Command
     private function getSleepOption(): string
     {
         return $this->option('sleep');
+    }
+
+    /**
+     * @return string
+     */
+    private function getConnectionOption(): string
+    {
+        return $this->option('connection');
     }
 
     /**
