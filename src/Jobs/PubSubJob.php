@@ -65,6 +65,26 @@ class PubSubJob extends Job implements JobContract
     }
 
     /**
+     * Get message attributes
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->job->attributes();
+    }
+
+    /**
+     * Get payload as array
+     *
+     * @return array
+     */
+    public function getPayloadAsArray()
+    {
+        return json_decode($this->getRawBody(), true);
+    }
+
+    /**
      * Get the number of times the job has been attempted.
      *
      * @return int
