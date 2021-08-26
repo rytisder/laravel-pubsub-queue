@@ -125,7 +125,7 @@ class PubSubQueue extends Queue implements QueueContract
 
         $decoded_payload = json_decode($payload, true);
 
-        return $decoded_payload['id'];
+        return $decoded_payload['id'] ?? null;
     }
 
     /**
